@@ -1,0 +1,31 @@
+using UnityEngine;
+using UnityEngine.Events;
+
+public class Trigger2D : MonoBehaviour
+{
+    // Allows you to select which objects can activate this trigger
+    [SerializeField] private LayerMask triggerLayers;
+    
+    // Unity Event that will be called when trigger is activated
+    [SerializeField] private UnityEvent onTriggerEnter;
+    
+    // Optional: Do you want the trigger to work only once?
+    [SerializeField] private bool oneTimeUse = false;
+    private bool hasBeenUsed = false;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the colliding object is on the specified layers
+        if (((1 << collision.gameObject.layer) & triggerLayers) != 0)
+        {
+            if (oneTimeUse && hasBeenUsed)
+                return;
+                
+            // Trigger the event
+            onTriggerEnter.Invoke();
+            
+            if (oneTimeUse)
+                hasBeenUsed = true;
+        }
+    }
+}
