@@ -1,0 +1,15 @@
+public class PlayerTeleporter : MonoBehaviour
+{
+    public Transform teleportDestination;
+    
+    public void TeleportPlayer()
+    {
+        // Find the player
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            // Teleport to destination
+            player.transform.position = teleportDestination.position;
+        }
+    }
+}
